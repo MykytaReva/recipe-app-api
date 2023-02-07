@@ -26,5 +26,8 @@ RUN python -m venv /py && \
         --no-create-home \
         django-user
 
+# RUN chown -R node /app/node_modules
+
 ENV PATH="/py/bin:$PATH"
 
+USER django-user
