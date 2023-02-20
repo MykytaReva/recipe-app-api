@@ -50,9 +50,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Retrieve recipes for authenticated user."""
         tags = self.request.query_params.get('tags')
-        print('Tags from RecipeViewSet---->>>', tags)
+        # print('Tags from RecipeViewSet---->>>', tags)
         ingredients = self.request.query_params.get('ingredients')
-        print('Ingredients from RecipeViewSet---->>>', ingredients)
+        # print('Ingredients from RecipeViewSet---->>>', ingredients)
         queryset = self.queryset
         if tags:
             tag_ids = self._params_to_ints(tags)
@@ -94,11 +94,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 @extend_schema_view(
     list=extend_schema(
-        OpenApiParameter(
-            'assigned_only',
-            OpenApiTypes.INT, enum=[0, 1],
-            description='Filter by items assigned to recipes.',
-        )
+        parameters=[
+            OpenApiParameter(
+                'assigned_only',
+                OpenApiTypes.INT, enum=[0, 1],
+                description='Filter by items assigned to recipes.',
+            ),
+        ]
     )
 )
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,

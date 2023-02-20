@@ -4,12 +4,18 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-i($f1$2wrk1q4g@bncpd=&%e@h%+4kaqu&f-fat8o=(jw_ms=m'
+# SECRET_KEY = 'django-insecure-i($f1$2wrk1q4g@bncpd=&%e@h%+4kaqu&f-fat8o=(jw_ms=m'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS.extend(
+    filter(
+        None,
+        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    )
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
